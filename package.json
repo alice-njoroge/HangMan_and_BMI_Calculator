@@ -1,0 +1,21 @@
+{
+  "name": "todosvue3",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "json-server --watch db.json"
+  },
+  "dependencies": {
+    "@heroicons/vue": "^2.1.5",
+    "json-server": "^0.17.4",
+    "vue": "^3.4.29"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "vite": "^5.3.1"
+  }
+}

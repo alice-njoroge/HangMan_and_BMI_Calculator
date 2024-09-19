@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import UserList from "@/components/userList.vue";
 import {ref} from "vue";
+import BmiCalculator from "@/components/BmiCalculator.vue";
+import HangMan from "@/components/hangMan.vue";
 const userData = ref([
   {
     "id": 1,
@@ -238,5 +240,7 @@ const userData = ref([
 </script>
 
 <template>
-  <UserList :users="userData"/>
+  <!--<UserList :users="userData"/> -->
+  <!--<BmiCalculator/> -->
+  <HangMan/>
 </template>

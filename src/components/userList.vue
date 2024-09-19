@@ -14,14 +14,22 @@ const handleClick = (event, user) => {
   event.preventDefault();
   currentUser.value = user;
 }
-const clonedUsers = ref(JSON.parse(JSON.stringify(props.users))); // structured clone is not working for me
+
+const sortingState = ref('asc');
+
+const sortedUserData = computed(()=> {
+  const clonedUsers = ref(JSON.parse(JSON.stringify(props.users)));
+  if (sortingState.value === 'desc'){
+    return clonedUsers.value.sort((a, b) => b.username.localeCompare(a.username)); //I intentionally want to modify the clonedObject
+  } else {
+    return clonedUsers.value.sort((a, b) => a.username.localeCompare(b.username));
+  }
+});
 
 const handleSorting = (sortingDirection) => {
-  if (sortingDirection === 'descending'){
-    return clonedUsers.value.sort((a, b) => b.username.localeCompare(a.username)); //I intentionally want to modify the clonedObject
-  }
-  return clonedUsers.value.sort((a, b) => a.username.localeCompare(b.username));
-
+ if (sortingDirection === 'asc' || sortingDirection === 'desc'){
+   sortingState.value = sortingDirection;
+ }
 };
 
 </script>
@@ -29,12 +37,13 @@ const handleSorting = (sortingDirection) => {
 <template>
   <section class="user-list">
     <nav class="user-list__nav">
+      <pre>{{sortingState}}</pre>
       <p> {{ users.length }} Users</p>
-      <button class="user-list__nav-filter" @click="handleSorting">Asc ⇧</button>
-      <button class="user-list__nav-filter user-list__nav-filter--active" @click="handleSorting('descending')">
+      <button class="user-list__nav-filter" :class="{'user-list__nav-filter--active' : sortingState === 'asc'}" @click="handleSorting('asc')">Asc ⇧</button>
+      <button class="user-list__nav-filter " :class="{'user-list__nav-filter--active' : sortingState === 'desc'}" @click="handleSorting('desc')">
         Desc ⇩
       </button>
-      <a v-for="user in clonedUsers"
+      <a v-for="user in sortedUserData"
          @click="handleClick($event, user)"
          :key="user.id" href="/"
          class="user-list__nav-item"
